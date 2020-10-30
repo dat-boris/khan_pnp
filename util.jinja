@@ -1,0 +1,27 @@
+{% macro render_dice(s) -%}
+    {% set slist = s.split(' ') %}
+    {% for c in slist %}
+        {% if c == "1" %}
+            <i class="fas fa-dice-one"></i>
+        {% elif c == "2" %}
+            <i class="fas fa-dice-two"></i>
+        {% elif c == "3" %}
+            <i class="fas fa-dice-three"></i>
+        {% elif c == "4" %}
+            <i class="fas fa-dice-four"></i>
+        {% elif c == "5" %}
+            <i class="fas fa-dice-five"></i>
+        {% elif c == "6" %}
+            <i class="fas fa-dice-six"></i>
+        {% else %}
+            {{ c }}
+        {% endif %}
+    {% endfor %}
+{%- endmacro %}
+
+{% macro render_color(s) -%}
+    {% set slist = s.split(' ') %}
+    {% for c in slist %}
+        <i class="fa fa-info-circle" aria-hidden="true" style="color: {{c}};"></i>
+    {% endfor %}
+{%- endmacro %}

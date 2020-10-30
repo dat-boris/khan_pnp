@@ -1,0 +1,27 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+autologging = "*"
+pytest-watch = "*"
+mypy = "*"
+black = "==19.10b0"
+pytest-cov = "*"
+codecov = "*"
+pipfile = "*"
+twine = "*"
+
+[packages]
+pageshot = "*"
+gensim = "*"
+playtest-card = {git = "https://github.com/dat-boris/card_maker"}
+pyyaml = "*"
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib = "*"
+jinja2 = "*"
+
+[requires]
+python_version = "3.7"

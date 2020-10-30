@@ -1,0 +1,195 @@
+{% import 'util.jinja' as util %}
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- https://github.com/showdownjs/showdown -->
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+
+    <!-- loading fonts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+    <script type="text/javascript">WebFont.load({  google: {    families: ["Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Source Serif Pro:regular,600,700"]  }});</script>
+
+    <script>
+        /** convert showdown */
+        var converter = new showdown.Converter({
+            "literalMidWordUnderscores": true
+        });
+
+        /**
+         * Replace graphie
+         * From: web+graphie://ka-perseus-graphie.s3.amazonaws.com/f7278ea487012d7aab04e559ce361e88ebde293c
+         * To: https://ka-perseus-graphie.s3.amazonaws.com/f7278ea487012d7aab04e559ce361e88ebde293c.svg
+        */
+       function replaceGraphie(s) {
+            return s.replace(
+               /web\+graphie:\/\/ka-perseus-graphie.s3.amazonaws.com\/([0-9a-f]+)/,
+               (_, $1) => "https://ka-perseus-graphie.s3.amazonaws.com/" + $1 + ".svg"
+            );
+       }
+
+       /**
+        * Replace with katex
+        */
+        function repalceKatex(s) {
+            // NOTE: aligned and not align https://github.com/KaTeX/KaTeX/issues/61
+           return s.replace(/\{align\}/g, "{aligned}").replace(
+               /\$(.*?)(?<!\\)\$/sg,
+               (_, $1) => katex.renderToString($1)
+           )
+       }
+
+    </script>
+    <style>
+        body {
+            /** NOTE: might need to adjust to layout */
+            height: 1040px;
+            width: 750px;
+
+            /**
+            font-size: 30px;
+            font-family: 'Sen', sans-serif;
+            background-color: white;
+            color: black;
+            */
+
+            font-family: 'Source Serif Pro', sans-serif;
+            line-height: 1.4;
+            color: #626569;
+        }
+
+        .card-border {
+            width: 100%;
+            height: 100%;
+
+            border-radius: 10px;
+            border:  0.5px dotted grey;
+
+            margin: 20px;
+            padding: 20px;
+        }
+
+        #title {
+            font-size: 40px;
+        }
+
+        .centerpiece {
+            text-align: center;
+            font-size: 60px;
+        }
+
+        .centerpiece .small {
+            font-size: 24px;
+        }
+
+        .image {
+            margin: 20px 0px;
+        }
+        .image img {
+            height: 140px;
+            width: 140px;
+        }
+
+        #properties {
+            font-size: 40px;
+
+            float: right;
+            text-align: right;
+            padding: 10px;
+
+            /* background-color: grey;
+            color: white;
+            border-radius: 10px;
+            border: 1px solid grey; */
+        }
+
+        .clause {
+            padding: 5px;
+            font-size: 24px;
+        }
+
+        .clause.large-icons {
+            font-size: 80px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .clause .heavy {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .clause .transparent {
+            opacity: 0.4;
+        }
+
+        #footer {
+            transform: rotate(180deg);
+            bottom: 10px;
+
+            padding: 10px;
+            font-size: 12px;
+            font-family: 'Courier', serif;
+        }
+
+        #header {
+            font-size: 20px;
+            font-family: 'Courier', serif;
+        }
+
+    </style>
+
+    <!-- https://katex.org/docs/browser.html -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"></script>
+
+    <body>
+        <div class="card-border">
+            <!-- <div id="header">
+                {{ question_id }}
+            </div> -->
+            <!-- <div id="properties">
+                {% if mastery_bonus %}
+                {{ mastery_bonus }}
+                {% endif %}
+            </div>
+            {% if id %}
+            <div id="title">
+                {{ type }}: {{id}}
+            </div>
+            {% endif %} -->
+            <!-- centrally aligned center piece -->
+            <!-- {% if card_colour %}
+            <div class="centerpiece">
+                <div class="small">Card color:</div>
+                {{ util.render_color(card_colour) }}
+            </div>
+            {% endif %} -->
+            <div id="properties" class="image">
+                <img src="https://i.ibb.co/TPxyYKk/hackathon-2020-2.png"></img>
+            </div>
+
+            <div class="content">
+                <div class="clause">
+                    <!-- Text of the hint -->
+                    <div class="katex-markdown">{{ questions }}</div>
+
+                    True or false?
+
+                </div>
+                <div id="footer">
+                    <div class="transparent">Hint: {{ required_hint }}</div>
+                    <div class="transparent">{{is_correct}}: {{ correct_answer }}</div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var eles = document.getElementsByClassName("katex-markdown");
+            for (var i=0; i<eles.length; i++) {
+                var e = eles[i];
+                e.innerHTML = converter.makeHtml(replaceGraphie(repalceKatex(e.textContent)));
+            }
+        </script>
+    </body>
+<html>
